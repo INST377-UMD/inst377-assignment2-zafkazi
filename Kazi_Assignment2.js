@@ -7,8 +7,11 @@ if(document.getElementById("quote")){
 
         })
 }
-
-
-function StartVoice(){
+//Voice functions
+function startVoice(){
     
 }
+function stopVoice(){
+
+}
+//Stock functions
