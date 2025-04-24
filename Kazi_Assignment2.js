@@ -9,7 +9,7 @@ if(document.getElementById("quote")){
 }
 //Voice functions
 function startVoice(){
-    
+
 }
 function stopVoice(){
 
