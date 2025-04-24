@@ -22,7 +22,7 @@ body{
     margin: 5px;
 }
 #nav_bar li:hover{
-    background-color:deeppink;
+    background-color:wheat;
     color: white;
 }
 #nav_bar ul li{
@@ -35,6 +35,7 @@ body{
 #custom_buttons{
     background-color: black;
     text-align: center;
+    width: 50%;
     padding: 10px;
     margin: 15px;
     border: 2px solid cyan;
@@ -114,6 +115,7 @@ body{
     background-color: greenyellow;
     text-align: center;
     padding: 10px;
+    width: 50%;
     margin: 15px;
     border: 2px solid black;
 }

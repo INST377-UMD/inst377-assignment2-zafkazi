@@ -9,9 +9,24 @@ if(document.getElementById("quote")){
 }
 //Voice functions
 function startVoice(){
-
+    if (annyang){
+        const commands = {
+            'hello': () => alert('Hello World'),
+            'change color to *color': (color) => document.body.style.backgroundColor = color,
+            'navigate to *page': (page) => {
+                const target = page.toLowerCase();
+                if (target === 'home') window.location.href = 'Kazi_Assignment2_Home.html';
+                else if (target === 'stocks') window.location.href = 'Kazi_Assignment2_Stocks.html';
+                else if (target === 'dogs') window.location.href = 'Kazi_Assignment2_Dogs.html';
+            }
+        }
+        annyang.addCommands(commands);
+        annyang.start();
+    }
 }
 function stopVoice(){
-
+    if(annyang){
+        annyang.abort();
+    }
 }
 //Stock functions
