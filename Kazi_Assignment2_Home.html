@@ -4,6 +4,9 @@
 <head>
     <title>INST377 Assignment 2</title>
     <link rel="stylesheet" href="Kazi_Assignment2.css">
+    <!--For voice recognition-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+    <script src="Kazi_Assignment2.js" defer></script>
 </head>
 
 <body>
@@ -11,6 +14,7 @@
 <header id="bar">
     <h1>INST377 - Activities</h1>
 </header>
+
 <nav id="nav_bar">
     <ul>
         <li><a href="Kazi_Assignment2_Home.html">Home</a></li>
@@ -19,7 +23,23 @@
     </ul>
 </nav>
 
+<h1>These are some different activities we can try!</h1>
 
+<div id="custom_buttons">
+    <button id="custom_1" onclick="window.location.href='Kazi_Assignment2_Stocks.html'">Stocks</button>
+    <button id="custom_2" onclick="window.location.href='Kazi_Assignment2_Dogs.html'">Dogs</button>
+</div>
+
+<div id="quote_of_the_day">
+    <h3>Quote of the day:</h3>
+    <p id="quote"></p>
+</div>
+
+<div id="voice_control">
+    <h2>In this webpage there are options to navigate with audio!</h2>
+    <br>
+    <p>Make sure your mic is enabled to use this feature.</p>
+</div>
 
 </body>
 </html>
