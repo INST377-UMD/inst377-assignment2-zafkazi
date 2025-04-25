@@ -1,7 +1,6 @@
 body{
     background-color:burlywood;
     padding: 2px;
-    margin: auto;
     width: 100%;
 }
 #bar{
@@ -32,15 +31,24 @@ body{
     padding: 10px;
 }
 /*Custom buttons*/
+#centered{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
 #custom_buttons{
     background-color: black;
     text-align: center;
     width: 50%;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
     margin: 15px;
     border: 2px solid cyan;
 }
-#custom_1{
+#custom_1, #custom_2{
   align-items: center;
   background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
   border: 0;
@@ -75,44 +83,13 @@ body{
   }
 }
 }
-#custom_2{
-    align-items: center;
-    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
-    border: 0;
-    border-radius: 8px;
-    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    display: flex;
-    font-family: Phantomsans, sans-serif;
-    font-size: 20px;
-    justify-content: center;
-    line-height: 1em;
-    max-width: 100%;
-    min-width: 140px;
-    padding: 19px 24px;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-    cursor: pointer;
-  
-  .button-63:active,
-  .button-63:hover {
-    outline: 0;
-  }
-  
-  @media (min-width: 768px) {
-    .button-63 {
-      font-size: 24px;
-      min-width: 196px;
-    }
-  }
-}
+
 /*Quote of the Day*/
 #quote_of_the_day{
     background-color: greenyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     padding: 10px;
     width: 50%;
@@ -123,9 +100,11 @@ body{
     background-color: blueviolet;
     text-align: center;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     width: 50%;
-    padding: 10px;
-    margin: 15px;
     border: 2px solid black;
 }
 ul li {

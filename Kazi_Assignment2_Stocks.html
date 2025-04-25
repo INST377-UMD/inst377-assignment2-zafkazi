@@ -26,16 +26,36 @@
 
 
 
-<div id="voice_control">
-    <h2>In this webpage there are options to navigate with audio!</h2>
-    <p>Make sure your mic is enabled to use this feature.</p>
-    <ul>
-        <li>"Hello" - Sends Alert saying "Hello World"</li>
-        <li>"Change color to [color]" - Changes background color</li>
-        <li>"Navigate to [page_name] - Navigates to Home, Stocks, or Dogs page"</li>
-    </ul>
-    <button id="voice_control_button1" onclick="startVoice()">Turn on Audio</button>
-    <button id="voice_control_button2" onclick="stopVoice()">Turn off Audio</button>
+<div id="centered">
+    <div id="voice_control">
+        <div>
+            <h2>In this webpage there are options to navigate with audio!</h2>
+            <br>
+            <p>Make sure your mic is enabled to use this feature.</p>
+            <ul>
+                <li>"Hello" - Sends Alert saying "Hello World"</li>
+                    <ul>
+                        <li>Say: Hello</li>
+                    </ul>
+                <li>"Change color to [color]" - Changes background color</li>
+                    <ul>
+                        <li>Say: Change color to *color</li>
+                    </ul>
+                <li>"Navigate to [page_name] - Navigates to Home, Stocks, or Dogs page"</li>
+                    <ul>
+                        <li>Say: Navigate to *page_name</li>
+                    </ul>
+            </ul>
+
+            <div id="centered">
+                <div id="custom_buttons">
+                    <button id="custom_1" onclick="startVoice()">Turn on Audio</button>
+                    <button id="custom_2" onclick="stopVoice()">Turn off Audio</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </div>
 
 </body>
