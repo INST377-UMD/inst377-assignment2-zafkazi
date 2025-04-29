@@ -32,6 +32,27 @@ function stopVoice(){
 //Stock Functions
 function lookupStock(){
     const ticker = document.getElementById("stock_ticker").value.trim();
+    if(!ticker){
+        alert("Please enter a ticker symbol.");
+        return;
+    }
+    const days = document.querySelector('input[name="days"]:checked').value;
+
+    const toDate = new Date();
+    const fromDate = new Date();
+    fromDate.setDate(toDate.getDate() - parseInt(days));
+
+    const toStr = toDate.toISOString().split('T')[0];
+    const fromStr = fromDate.toISOString().split('T')[0];
+
+    const API_KEY = "POLYGON_API_KEY";
+
+    fetch("https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}")
+        .then(res => res.json())
+        .then(data => {
+            
+        })
+
 }
 //Dog Functions
 function loadDogPics(){
