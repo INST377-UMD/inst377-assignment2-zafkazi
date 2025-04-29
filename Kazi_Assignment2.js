@@ -50,9 +50,74 @@ function lookupStock(){
     fetch("https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}")
         .then(res => res.json())
         .then(data => {
-            
+            if(data.results && data.results.length > 0){
+                const labels = data.labels.map(items => {
+                    let date = new Date(items.t);
+                    return date.toLocaleDateString();
+                });
+                const prices = data.results.map(item => item.c);
+                renderChart(labels, prices, ticker);
+            }
+            else{
+                alert("No data found for this ticker" + ticker);
+            }
         })
 
+}
+function renderChart(labels, prices, ticker){
+
+}
+function fetchRedditStock(){
+    fetch("https://tradestie.com/api/v1/apps/reddit?date=2022-04-03")
+    .then(res => res.json())
+    .then(data => {
+        const top5Stocks = data.slice(0,5);
+        populateRedditTable(top5Stocks);
+    })
+}
+function populateRedditTable(stocks){
+    const tBody = document.querySelector("#redditTable tBody");
+    tBody.innerHTML = "";
+
+    stocks.forEach(stock => {
+        const tr = document.createElement("tr");
+        const tdTicker = document.createElement("td");
+        const a = document.createElement("a");
+
+        a.href = `https://finance.yahoo.com/quote/${stock.ticker}`;
+        a.textContent = stock.ticker;
+        a.target = "_blank";
+        tdTicker.appendChild(a);
+
+        const tdCommentCount = document.createElement("td");
+        tdCommentCount.textContent = stock.comment_count;
+
+        const tdSentiment = document.createElement("id");
+        if (stock.sentiment.toLowerCase() === "bullish"){
+            tdSentiment.textContent = "Bullish 🚀";
+        }
+        else if (stock.sentiment.toLowerCase() === "bearish"){
+            tdSentiment.textContent = "Bearish 🐻";
+        }
+        else {
+            tdSentiment.textContent = stock.sentiment;
+        }
+
+        tr.appendChild(tdTicker);
+        tr.appendChild(tdCommentCount);
+        tr.appendChild(tdSentiment);
+
+        tBody.appendChild(tr);
+    });
+}
+
+if (annyang){
+    annyang.addCommands({
+        'lookup *stock:': (stock) => {
+            document.getElementById('ticker').value = stock.toUpperCase();
+            lookupStock();
+        }
+    });
 }
 //Dog Functions
 function loadDogPics(){

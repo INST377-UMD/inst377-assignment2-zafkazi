@@ -33,17 +33,25 @@
     <option value="60_days">60 Days</option>
     <option value="90_days">90 Days</option>
 </select>
-<br>
 <button id="stock_select" onclick="lookupStock()">Get Stock Data</button>
-
-<!--Stock Chart-->
-
-
+<br>
+<canvas id="stockChart" width="600" height="300"></canvas>
 
 <!--Reddit top 5 stocks-->
+<table id="redditTable" border="2">
+    <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Comment Count</th>
+            <th>Sentiment</th>
+        </tr>
+    </thead>
+    <tbody>
 
+    </tbody>
+</table>
 
-
+<br>
 <div id="centered">
     <div id="voice_control">
         <div>
@@ -63,6 +71,10 @@
                     <ul>
                         <li>Say: Navigate to *page_name</li>
                     </ul>
+                <li>"Lookup [stock]" - Looks up given stock for 30 days</li>
+                    <ul>
+                        <li>Say: Lookup *stockname</li>
+                    </ul>
             </ul>
 
             <div id="centered">
@@ -71,7 +83,6 @@
                     <button id="custom_2" onclick="stopVoice()">Turn off Audio</button>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
