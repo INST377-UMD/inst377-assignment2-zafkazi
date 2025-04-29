@@ -24,7 +24,23 @@
 
 
 <h1>Let's chart some stocks!</h1>
+<label for="stock_ticker">Stock Ticker:</label>
+<input type="text" id="ticker" placeholder="AAPL">
+<br>
+<select name="stock_duration">
+    <option value="stocks">Select</option>
+    <option value="30_days">30 Days</option>
+    <option value="60_days">60 Days</option>
+    <option value="90_days">90 Days</option>
+</select>
+<br>
+<button id="stock_select" onclick="lookupStock()">Get Stock Data</button>
 
+<!--Stock Chart-->
+
+
+
+<!--Reddit top 5 stocks-->
 
 
 

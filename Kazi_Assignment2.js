@@ -29,4 +29,15 @@ function stopVoice(){
         annyang.abort();
     }
 }
-//Stock functions
+//Stock Functions
+function lookupStock(){
+    const ticker = document.getElementById("stock_ticker").value.trim();
+}
+//Dog Functions
+function loadDogPics(){
+    fetch("https://dog.ceo/api/breeds/image/random/10")
+    .then(res => res.json())
+    .then(data => {
+        
+    })
+}
