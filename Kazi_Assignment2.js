@@ -64,8 +64,28 @@ function lookupStock(){
         })
 
 }
-function renderChart(labels, prices, ticker){
-
+function renderChart(labels, dataPoints, ticker){
+    const charting = document.getElementById('stockChart').getContext('2d');
+    if (stockChart) stockChart.destroy();
+    stockChart = new Chart(charting, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: ticker + "Closing Prices",
+                data: dataPoints,
+                borderColor: 'red',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {display: true},
+                y: {display: true}
+            }
+        }
+    });
 }
 function fetchRedditStock(){
     fetch("https://tradestie.com/api/v1/apps/reddit?date=2022-04-03")
