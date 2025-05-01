@@ -158,8 +158,16 @@ function displayDogImages(images){
 function loadDogBreeds(){
     fetch(``)
 }
-function dogBreedButton(){
-
+function createBreedButton(){
+    const container = document.getElementById("breed_buttons");
+    container.innerHTML="";
+    breeds.forEach(breed => {
+        const btn = document.createElement("button");
+        btn.className = "custom-button";
+        btn.textContent = breed;
+        btn.addEventListener("click", ()=> fetchBreedInfo(breed));
+        container.appendChild(btn);
+    });
 }
 function fetchBreedInfo(){
 
