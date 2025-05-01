@@ -31,23 +31,24 @@ function stopVoice(){
 }
 //Stock Functions
 function lookupStock(){
-    const ticker = document.getElementById("stock_ticker").value.trim();
+    const ticker = document.getElementById("ticker").value;
+
     if(!ticker){
         alert("Please enter a ticker symbol.");
         return;
     }
-    const days = document.querySelector('input[name="days"]:checked').value;
+    const days = document.getElementById('selectStock').value;
 
     const toDate = new Date();
     const fromDate = new Date();
     fromDate.setDate(toDate.getDate() - parseInt(days));
 
-    const toStr = toDate.toISOString().split('T')[0];
-    const fromStr = fromDate.toISOString().split('T')[0];
+    const toStr = toDate.getTime();
+    const fromStr = toDate.getTime() - days*24*60*60*1000;
 
     const API_KEY = "POLYGON_API_KEY";
-
-    fetch("https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}")
+    //https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}
+    fetch(`https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2025-01-09/2025-02-10?adjusted=true&sort=asc&limit=120&apiKey=w7kSxJwDJLQmPqPziHhR6ZTt63DCbrKH`)
         .then(res => res.json())
         .then(data => {
             if(data.results && data.results.length > 0){
@@ -56,6 +57,7 @@ function lookupStock(){
                     return date.toLocaleDateString();
                 });
                 const prices = data.results.map(item => item.c);
+
                 renderChart(labels, prices, ticker);
             }
             else{
@@ -66,6 +68,9 @@ function lookupStock(){
 }
 function renderChart(labels, dataPoints, ticker){
     const charting = document.getElementById('stockChart').getContext('2d');
+    console.log(labels);
+    console.log(dataPoints);
+    console.log(ticker);
     if (stockChart) stockChart.destroy();
     stockChart = new Chart(charting, {
         type: 'line',
@@ -92,12 +97,12 @@ function fetchRedditStock(){
     .then(res => res.json())
     .then(data => {
         const top5Stocks = data.slice(0,5);
+        console.log(top5Stocks);
         populateRedditTable(top5Stocks);
     })
 }
 function populateRedditTable(stocks){
-    const tBody = document.querySelector("#redditTable tBody");
-    tBody.innerHTML = "";
+    const tBody = document.getElementById("redditTable");
 
     stocks.forEach(stock => {
         const tr = document.createElement("tr");
@@ -110,17 +115,17 @@ function populateRedditTable(stocks){
         tdTicker.appendChild(a);
 
         const tdCommentCount = document.createElement("td");
-        tdCommentCount.textContent = stock.comment_count;
+        tdCommentCount.innerHTML = stock.no_of_comments;
 
         const tdSentiment = document.createElement("id");
         if (stock.sentiment.toLowerCase() === "bullish"){
-            tdSentiment.textContent = "Bullish 🚀";
+            tdSentiment.innerHTML = "Bullish 🚀";
         }
         else if (stock.sentiment.toLowerCase() === "bearish"){
-            tdSentiment.textContent = "Bearish 🐻";
+            tdSentiment.innerHTML = "Bearish 🐻";
         }
         else {
-            tdSentiment.textContent = stock.sentiment;
+            tdSentiment.innerHTML = stock.sentiment;
         }
 
         tr.appendChild(tdTicker);
@@ -147,3 +152,5 @@ function loadDogPics(){
         
     })
 }
+
+window.onload = fetchRedditStock();

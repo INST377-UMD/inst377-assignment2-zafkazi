@@ -27,18 +27,18 @@
 <label for="stock_ticker">Stock Ticker:</label>
 <input type="text" id="ticker" placeholder="AAPL">
 <br>
-<select name="stock_duration">
+<select id="selectStock" name="stock_duration">
     <option value="stocks">Select</option>
-    <option value="30_days">30 Days</option>
-    <option value="60_days">60 Days</option>
-    <option value="90_days">90 Days</option>
+    <option value="30">30 Days</option>
+    <option value="60">60 Days</option>
+    <option value="90">90 Days</option>
 </select>
 <button id="stock_select" onclick="lookupStock()">Get Stock Data</button>
 <br>
 <canvas id="stockChart" width="600" height="300"></canvas>
 
 <!--Reddit top 5 stocks-->
-<table id="redditTable" border="2">
+<table id="redditTable" border="2" style="width: 250px; height: 250px;">
     <thead>
         <tr>
             <th>Ticker</th>
