@@ -84,8 +84,7 @@ function renderChart(labels, dataPoints, ticker){
                 data: dataPoints,
                 borderColor: 'red'
             }]
-        },
-        
+        },        
     });
 }
 function fetchRedditStock(){
@@ -141,12 +140,37 @@ if (annyang){
     });
 }
 //Dog Functions
-function loadDogPics(){
+function loadDogImages(){
     fetch("https://dog.ceo/api/breeds/image/random/10")
     .then(res => res.json())
     .then(data => {
-        
-    })
+        if(data.status === "success"){
+            displayDogImages(data.message);
+        }
+        else{
+            alert("Error loading dog images.");
+        }
+    });
 }
+function displayDogImages(images){
 
+}
+function loadDogBreeds(){
+    fetch(``)
+}
+function dogBreedButton(){
+
+}
+function fetchBreedInfo(){
+
+}
+if (annyang){
+    annyang.addCommands({
+        'load dog breed *breed': (breed) => {
+            fetchBreedInfo(breed.trim()).toLowerCase();
+        }
+    });
+}
 window.onload = fetchRedditStock();
+window.onload = loadDogImages();
+window.onload = loadDogBreeds();
