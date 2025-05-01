@@ -38,58 +38,54 @@ function lookupStock(){
         return;
     }
     const days = document.getElementById('selectStock').value;
-
+    console.log(days);
+    console.log(ticker);
     const toDate = new Date();
-    const fromDate = new Date();
-    fromDate.setDate(toDate.getDate() - parseInt(days));
 
     const toStr = toDate.getTime();
     const fromStr = toDate.getTime() - days*24*60*60*1000;
 
-    const API_KEY = "POLYGON_API_KEY";
+    const API_KEY = "w7kSxJwDJLQmPqPziHhR6ZTt63DCbrKH";
     //https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}
-    fetch(`https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2025-01-09/2025-02-10?adjusted=true&sort=asc&limit=120&apiKey=w7kSxJwDJLQmPqPziHhR6ZTt63DCbrKH`)
+    fetch(`https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}`)
         .then(res => res.json())
         .then(data => {
-            if(data.results && data.results.length > 0){
-                const labels = data.labels.map(items => {
-                    let date = new Date(items.t);
-                    return date.toLocaleDateString();
-                });
-                const prices = data.results.map(item => item.c);
+            console.log(data);
+            
+            const date1 = [];
+            const cost1 = [];
 
-                renderChart(labels, prices, ticker);
-            }
-            else{
-                alert("No data found for this ticker" + ticker);
-            }
-        })
+            data.results.forEach((item) => {
+                const date = new Date(item.t).toLocaleDateString();
+                const cost = item.c;
+                date1.push({date});
+                cost1.push({cost});
+            });
+            console.log(date1);
+            console.log(cost1);
+            renderChart(date1, cost1, ticker);
+            
+        });   
 
 }
+let stockChart;
 function renderChart(labels, dataPoints, ticker){
-    const charting = document.getElementById('stockChart').getContext('2d');
     console.log(labels);
     console.log(dataPoints);
     console.log(ticker);
-    if (stockChart) stockChart.destroy();
-    stockChart = new Chart(charting, {
+    const ctx = document.getElementById("stockChart");
+    if (stockChart) {stockChart.destroy();}
+    stockChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: ticker + "Closing Prices",
+                label: ticker + " Closing Prices",
                 data: dataPoints,
-                borderColor: 'red',
-                fill: false
+                borderColor: 'red'
             }]
         },
-        options: {
-            responsive: true,
-            scales: {
-                x: {display: true},
-                y: {display: true}
-            }
-        }
+        
     });
 }
 function fetchRedditStock(){
