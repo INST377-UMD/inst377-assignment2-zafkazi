@@ -160,7 +160,8 @@ if (annyang){
 }
 //Dog Functions
 function loadDogImages(){
-    fetch(`https://dog.ceo/api/breeds/image/random`)
+    const pics_url = "https://dog.ceo/api/breeds/image/random/10";
+    fetch(pics_url)
     .then(res => res.json())
     .then(data => {
         if(data.status === "success"){
@@ -172,10 +173,25 @@ function loadDogImages(){
     });
 }
 function displayDogImages(images){
-
+    const container = document.getElementsById("dog_carousel");
+    container.innerHTML = "";
+    images.forEach(url => {
+        const img = document.createElement("image");
+        image.src = url;
+        image.style.margin = "10px";
+        iimagemg.style.width = "150px";
+        container.appendChild(image);
+    })
 }
 function loadDogBreeds(){
-    fetch(`https://dogapi.dog/api/v2/breeds`)
+    fetch(`https://dog.ceo/api/breeds/list/all`)
+    .then(res => res.json()
+    .then(data => {
+        if(data.status === "success"){
+            const breeds = Object.keys(data.message);
+            createBreedButton(breeds);
+        }
+    }));
 }
 function createBreedButton(){
     const container = document.getElementById("breed_buttons");
@@ -189,7 +205,7 @@ function createBreedButton(){
     });
 }
 function fetchBreedInfo(){
-
+    
 }
 if (annyang){
     annyang.addCommands({
