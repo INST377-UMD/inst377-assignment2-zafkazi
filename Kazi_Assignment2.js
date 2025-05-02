@@ -30,7 +30,33 @@ function stopVoice(){
     }
 }
 //Stock Functions
-function lookupStock(){
+let myChart;
+function stockData(ticker, from, today) {
+    console.log("in the function");
+    return fetch(
+      "https://api.polygon.io/v2/aggs/ticker/" +
+        ticker.toUpperCase() +
+        "/range/1/day/" +
+        from +
+        "/" +
+        today +
+        "?apiKey=w7kSxJwDJLQmPqPziHhR6ZTt63DCbrKH"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        return data.results;
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
+async function lookupStock(){
     const ticker = document.getElementById("ticker").value;
 
     if(!ticker){
@@ -45,48 +71,41 @@ function lookupStock(){
     const toStr = toDate.getTime();
     const fromStr = toDate.getTime() - days*24*60*60*1000;
 
-    const API_KEY = "w7kSxJwDJLQmPqPziHhR6ZTt63DCbrKH";
-    //https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}
-    fetch(`https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${fromStr}/${toStr}?apiKey=${API_KEY}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            
-            const date1 = [];
-            const cost1 = [];
+    const date1 = [];
+    const cost1 = [];
+    let data = await stockData(ticker, fromStr, toStr);
+    data.forEach((item) => date1.push(new Date(item.t).toLocaleDateString()));
+    data.forEach((item) => cost1.push(item.c));
+        const ctx = document.getElementById("myChart");
 
-            data.results.forEach((item) => {
-                const date = new Date(item.t).toLocaleDateString();
-                const cost = item.c;
-                date1.push({date});
-                cost1.push({cost});
-            });
-            console.log(date1);
-            console.log(cost1);
-            renderChart(date1, cost1, ticker);
-            
+        if (myChart) {
+            myChart.destroy();
+        }
+
+        myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+            labels: date1,
+            datasets: [
+                {
+                label: "Price of stock",
+                data: cost1,
+                borderWidth: 1,
+                },
+            ],
+            },
+            options: {
+            scales: {
+                y: {
+                beginAtZero: true,
+                },
+            },
+            },
         });   
 
 }
-let stockChart;
-function renderChart(labels, dataPoints, ticker){
-    console.log(labels);
-    console.log(dataPoints);
-    console.log(ticker);
-    const ctx = document.getElementById("stockChart");
-    if (stockChart) {stockChart.destroy();}
-    stockChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: ticker + " Closing Prices",
-                data: dataPoints,
-                borderColor: 'red'
-            }]
-        },        
-    });
-}
+
+
 function fetchRedditStock(){
     fetch("https://tradestie.com/api/v1/apps/reddit?date=2022-04-03")
     .then(res => res.json())
@@ -141,7 +160,7 @@ if (annyang){
 }
 //Dog Functions
 function loadDogImages(){
-    fetch("https://dog.ceo/api/breeds/image/random/10")
+    fetch(`https://dog.ceo/api/breeds/image/random`)
     .then(res => res.json())
     .then(data => {
         if(data.status === "success"){
@@ -156,7 +175,7 @@ function displayDogImages(images){
 
 }
 function loadDogBreeds(){
-    fetch(``)
+    fetch(`https://dogapi.dog/api/v2/breeds`)
 }
 function createBreedButton(){
     const container = document.getElementById("breed_buttons");
