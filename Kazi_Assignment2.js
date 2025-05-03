@@ -173,39 +173,66 @@ function loadDogImages(){
     });
 }
 function displayDogImages(images){
-    const container = document.getElementsById("dog_carousel");
-    container.innerHTML = "";
+    const img_container = document.getElementById("dog_carousel");
+    img_container.innerHTML = "";
     images.forEach(url => {
         const img = document.createElement("image");
-        image.src = url;
-        image.style.margin = "10px";
-        iimagemg.style.width = "150px";
-        container.appendChild(image);
+        img.src = url;
+        img.style.margin = "10px";
+        img.style.width = "150px";
+        img_container.appendChild(img);
     })
 }
 function loadDogBreeds(){
     fetch(`https://dog.ceo/api/breeds/list/all`)
     .then(res => res.json()
     .then(data => {
+        console.log(data);
+
         if(data.status === "success"){
             const breeds = Object.keys(data.message);
-            createBreedButton(breeds);
+            createBreedButtons(breeds);
         }
+
     }));
 }
-function createBreedButton(){
+function createBreedButtons(breeds){
     const container = document.getElementById("breed_buttons");
-    container.innerHTML="";
+    container.innerHTML = "";
     breeds.forEach(breed => {
         const btn = document.createElement("button");
-        btn.className = "custom-button";
+        btn.className = "custom_button";
         btn.textContent = breed;
-        btn.addEventListener("click", ()=> fetchBreedInfo(breed));
+        btn.addEventListener("click", () => fetchBreedInfo(breed));
         container.appendChild(btn);
     });
 }
-function fetchBreedInfo(){
-    
+function fetchBreedInfo(breed){
+    fetch(`https://dogapi.dog/api/v2/breeds`)
+    .then(res => res.json()
+    .then(data => {
+        const breedInfo = data.data.find(item => item?.attributes?.name?.toLowerCase() === breed.toLowerCase());
+        if(breedInfo){
+            displayBreedInfo(breedInfo);
+        }
+        else{
+            document.getElementById("breed_info").innerHTML = "<p>No information found for breed: " + breed + "</p>";
+        }
+    }));
+}
+function displayBreedInfo(){
+    const info_container = document.getElementById("breed_info");
+    info_container.innerHTML = "";
+    const name = document.createElement("h3");
+    name.innerHTML = info_container.name;
+    const description = document.createElement("p");
+    description.innerHTML = info_container.temperament ? info_container.temperament : "Description not avaialble";
+    const lifeSpan = document.createElement("p");
+    lifeSpan.innerHTML = "Life Span: " + (info_container.life_span ? info.life_span : "Unknown");
+
+    info_container.appendChild(name);
+    info_container.appendChild(description);
+    info_container.appendChild(lifeSpan);
 }
 if (annyang){
     annyang.addCommands({
