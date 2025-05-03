@@ -199,7 +199,10 @@ function loadDogBreeds(){
 function createBreedButtons(breeds){
     const container = document.getElementById("breed_buttons");
     container.innerHTML = "";
-    breeds.forEach(breed => {
+
+    const ten_breeds = breeds.slice(0, 10);
+
+    ten_breeds.forEach(breed => {
         const btn = document.createElement("button");
         btn.className = "custom_button";
         btn.textContent = breed;
