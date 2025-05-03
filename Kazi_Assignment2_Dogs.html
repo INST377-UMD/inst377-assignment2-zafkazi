@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>INST377 Assignment 2</title>
+    <link rel="stylesheet" href="Kazi_Assignment2.css">
+    <!--For voice recognition-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-slider/1.0.0/simpleslider.min.js"></script>
+    <script src="Kazi_Assignment2.js" defer></script>
+</head>
+
+<body>
+
+<header id="bar">
+    <h1>INST377 - Activities</h1>
+</header>
+<nav id="nav_bar">
+    <ul>
+        <li><a href="Kazi_Assignment2_Home.html">Home</a></li>
+        <li><a href="Kazi_Assignment2_Stocks.html">Stocks</a></li>
+        <li><a href="Kazi_Assignment2_Dogs.html">Dogs</a></li>
+    </ul>
+</nav>
+
+<h1>Doggos! &#128054</h1>
+
+<h2>Dog Carousel</h2>
+<div id="dog_carousel" style="display: flex; height: 450px; width: 450px;" data-simple-slider></div>
+
+<h2>Dog Breeds</h2>
+<div id="breed_buttons"></div>
+<div id="breed_info"></div>
+<br>
+
+<div id="centered">
+    <div id="voice_control">
+        <div>
+            <h2>In this webpage there are options to navigate with audio!</h2>
+            <br>
+            <p>Make sure your mic is enabled to use this feature.</p>
+            <ul>
+                <li>"Hello" - Sends Alert saying "Hello World"</li>
+                    <ul>
+                        <li>Say: Hello</li>
+                    </ul>
+                <li>"Change color to [color]" - Changes background color</li>
+                    <ul>
+                        <li>Say: Change color to *color</li>
+                    </ul>
+                <li>"Navigate to [page_name] - Navigates to Home, Stocks, or Dogs page"</li>
+                    <ul>
+                        <li>Say: Navigate to *page_name</li>
+                    </ul>
+                <li>Load Dog Breed - Loads dog breed info</li>
+                    <ul>
+                        <li>Say: Load Dog Breed [dog breed]</li>
+                    </ul>
+            </ul>
+
+            <div id="centered">
+                <div id="custom_buttons">
+                    <button id="custom_1" onclick="startVoice()">Turn on Audio</button>
+                    <button id="custom_2" onclick="stopVoice()">Turn off Audio</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

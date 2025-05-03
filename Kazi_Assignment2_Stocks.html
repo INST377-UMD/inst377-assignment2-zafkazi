@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>INST377 Assignment 2</title>
+    <link rel="stylesheet" href="Kazi_Assignment2.css">
+    <!--For voice recognition-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="Kazi_Assignment2.js" defer></script>
+</head>
+
+<body>
+
+<header id="bar">
+    <h1>INST377 - Activities</h1>
+</header>
+<nav id="nav_bar">
+    <ul>
+        <li><a href="Kazi_Assignment2_Home.html">Home</a></li>
+        <li><a href="Kazi_Assignment2_Stocks.html">Stocks</a></li>
+        <li><a href="Kazi_Assignment2_Dogs.html">Dogs</a></li>
+    </ul>
+</nav>
+
+
+<h1>Let's chart some stocks!</h1>
+<label id="stock_ticker" for="stock_ticker">Stock Ticker:</label>
+<input type="text" id="ticker" placeholder="AAPL">
+<br>
+<select id="selectStock" name="stock_duration">
+    
+    <option value="30">30 Days</option>
+    <option value="60">60 Days</option>
+    <option value="90">90 Days</option>
+</select>
+<button id="stock_select" onclick="lookupStock()">Get Stock Data</button>
+<br>
+<canvas id="myChart"></canvas>
+
+<!--Reddit top 5 stocks-->
+<table id="redditTable" border="2" style="width: 350px; height: 250px;">
+    <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Comment Count</th>
+            <th>Sentiment</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<br>
+<div id="centered">
+    <div id="voice_control">
+        <div>
+            <h2>In this webpage there are options to navigate with audio!</h2>
+            <br>
+            <p>Make sure your mic is enabled to use this feature.</p>
+            <ul>
+                <li>"Hello" - Sends Alert saying "Hello World"</li>
+                    <ul>
+                        <li>Say: Hello</li>
+                    </ul>
+                <li>"Change color to [color]" - Changes background color</li>
+                    <ul>
+                        <li>Say: Change color to *color</li>
+                    </ul>
+                <li>"Navigate to [page_name] - Navigates to Home, Stocks, or Dogs page"</li>
+                    <ul>
+                        <li>Say: Navigate to *page_name</li>
+                    </ul>
+                <li>"Lookup [stock]" - Looks up given stock for 30 days</li>
+                    <ul>
+                        <li>Say: Lookup *stockname</li>
+                    </ul>
+            </ul>
+
+            <div id="centered">
+                <div id="custom_buttons">
+                    <button id="custom_1" onclick="startVoice()">Turn on Audio</button>
+                    <button id="custom_2" onclick="stopVoice()">Turn off Audio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
