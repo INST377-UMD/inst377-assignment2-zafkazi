@@ -18,7 +18,11 @@ function startVoice(){
                 if (target === 'home') window.location.href = 'Kazi_Assignment2_Home.html';
                 else if (target === 'stocks') window.location.href = 'Kazi_Assignment2_Stocks.html';
                 else if (target === 'dogs') window.location.href = 'Kazi_Assignment2_Dogs.html';
-            }
+            },
+            'look up *stock': (stock) => {
+                document.getElementById('ticker').value = stock.toUpperCase();
+                document.getElementById('stock_select').click();
+            }   
         }
         annyang.addCommands(commands);
         annyang.start();
@@ -131,7 +135,7 @@ function populateRedditTable(stocks){
         const tdCommentCount = document.createElement("td");
         tdCommentCount.innerHTML = stock.no_of_comments;
 
-        const tdSentiment = document.createElement("id");
+        const tdSentiment = document.createElement("td");
         if (stock.sentiment.toLowerCase() === "bullish"){
             tdSentiment.innerHTML = "Bullish 🚀";
         }
@@ -152,7 +156,7 @@ function populateRedditTable(stocks){
 
 if (annyang){
     annyang.addCommands({
-        'lookup *stock:': (stock) => {
+        'look up *stock:': (stock) => {
             document.getElementById('ticker').value = stock.toUpperCase();
             lookupStock();
         }
@@ -161,81 +165,80 @@ if (annyang){
 //Dog Functions
 function loadDogImages(){
     const pics_url = "https://dog.ceo/api/breeds/image/random/10";
+    console.log("loadDogImages()");
+    const img_container = document.getElementById("dog_carousel");
+
     fetch(pics_url)
     .then(res => res.json())
     .then(data => {
         if(data.status === "success"){
-            displayDogImages(data.message);
+            console.log(data.message);
+            data.message.forEach(url => {
+                const img = document.createElement("img");
+                img.src = url;
+                img.style.height = "450";
+                img.style.width = "450";
+                img_container.appendChild(img);
+            })
         }
         else{
             alert("Error loading dog images.");
         }
+        simpleslider.getSlider();
     });
 }
 function displayDogImages(images){
+    console.log("displayDogImages");
     const img_container = document.getElementById("dog_carousel");
     img_container.innerHTML = "";
-    images.forEach(url => {
-        const img = document.createElement("image");
-        img.src = url;
-        img.style.margin = "10px";
-        img.style.width = "150px";
-        img_container.appendChild(img);
-    })
+    
 }
 function loadDogBreeds(){
-    fetch(`https://dog.ceo/api/breeds/list/all`)
+    fetch(`https://dogapi.dog/api/v2/breeds`)
     .then(res => res.json()
     .then(data => {
-        console.log(data);
-
-        if(data.status === "success"){
-            const breeds = Object.keys(data.message);
-            createBreedButtons(breeds);
-        }
-
+        allBreeds = data.data;
+        createBreedButtons(allBreeds);
+        console.log(data.message);
     }));
 }
 function createBreedButtons(breeds){
     const container = document.getElementById("breed_buttons");
     container.innerHTML = "";
 
-    const ten_breeds = breeds.slice(0, 10);
-
-    ten_breeds.forEach(breed => {
+    breeds.forEach(breed => {
         const btn = document.createElement("button");
         btn.className = "custom_button";
-        btn.textContent = breed;
-        btn.addEventListener("click", () => fetchBreedInfo(breed));
+        btn.textContent = breed.attributes.name;
+        btn.addEventListener("click", () => displayBreedInfo(breed));
         container.appendChild(btn);
     });
 }
-function fetchBreedInfo(breed){
-    fetch(`https://dogapi.dog/api/v2/breeds`)
-    .then(res => res.json()
-    .then(data => {
-        const breedInfo = data.data.find(item => item?.attributes?.name?.toLowerCase() === breed.toLowerCase());
-        if(breedInfo){
-            displayBreedInfo(breedInfo);
-        }
-        else{
-            document.getElementById("breed_info").innerHTML = "<p>No information found for breed: " + breed + "</p>";
-        }
-    }));
-}
-function displayBreedInfo(){
+function displayBreedInfo(breed){
+    console.log(breed);
     const info_container = document.getElementById("breed_info");
     info_container.innerHTML = "";
+
     const name = document.createElement("h3");
-    name.innerHTML = info_container.name;
+    name.textContent = breed.attributes.name;
+
     const description = document.createElement("p");
-    description.innerHTML = info_container.temperament ? info_container.temperament : "Description not avaialble";
-    const lifeSpan = document.createElement("p");
-    lifeSpan.innerHTML = "Life Span: " + (info_container.life_span ? info.life_span : "Unknown");
+    description.textContent = breed.attributes.description || "No description available";
+
+    const min_lifeSpan = document.createElement("p");
+    const max_lifeSpan = document.createElement("p");
+    const min = breed.attributes.life.min;
+    const max = breed.attributes.life.max;
+    console.log(min);
+    console.log(max);
+
+    min_lifeSpan.textContent = `Min: ${min || "?"} years`;
+    max_lifeSpan.textContent = `Max: ${max || "?"} years`;
 
     info_container.appendChild(name);
     info_container.appendChild(description);
-    info_container.appendChild(lifeSpan);
+    info_container.appendChild(min_lifeSpan);
+    info_container.appendChild(max_lifeSpan);
 }
 if (annyang){
     annyang.addCommands({

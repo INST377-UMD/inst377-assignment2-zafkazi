@@ -2,6 +2,7 @@ body{
     background-color:burlywood;
     padding: 2px;
     width: 100%;
+    margin: 5px;
 }
 #bar{
     background-color: gray;
@@ -211,4 +212,3 @@ ul li {
       }
     }
 }
-
